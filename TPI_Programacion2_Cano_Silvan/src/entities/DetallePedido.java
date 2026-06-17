@@ -4,6 +4,8 @@ public class DetallePedido extends Base {
  
     private int cantidad;
     private Double subtotal;
+    
+    private static Long contador = 0L;
  
     // Relacion N:1 con Producto (muchos detalles referencian un producto)
     private Producto producto;
@@ -11,11 +13,19 @@ public class DetallePedido extends Base {
     public DetallePedido() {
         super();
     }
- 
-    public DetallePedido(Long id, int cantidad, Double subtotal, Producto producto) {
-        super(id);
+    
+    public DetallePedido(int cantidad, Double precio, Producto producto) {
+        super(contador++);
         this.cantidad = cantidad;
-        this.subtotal = subtotal;
         this.producto = producto;
+        this.subtotal = cantidad*precio;
+    }
+
+    public Double getSubtotal() {
+        return subtotal;
+    }
+    
+    public Producto getProducto() {
+        return producto;
     }
 }

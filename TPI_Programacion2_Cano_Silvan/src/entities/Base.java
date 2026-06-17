@@ -17,5 +17,13 @@ public abstract class Base {
         this.id = id;
         this.eliminado = false;
         this.createdAt = LocalDateTime.now();
-    } 
+    }
+
+    public boolean isEliminado() {
+        return eliminado;
+    }
+
+    public void setEliminado(boolean eliminado) {
+        this.eliminado = eliminado;
+    }
 }
