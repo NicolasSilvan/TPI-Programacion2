@@ -14,16 +14,23 @@ public abstract class Base {
     }
  
     public Base(Long id) {
-        this.id = id;
-        this.eliminado = false;
-        this.createdAt = LocalDateTime.now();
+        this.setId(id);
+        this.setEliminado(false);
+        this.setCreatedAt(LocalDateTime.now());
     }
+    
+    public long getId(){ return this.id; }
+    public void setId(long id) { this.id = id; }
 
-    public boolean isEliminado() {
-        return eliminado;
-    }
+    public boolean getEliminado() { return this.eliminado; }
+    public void setEliminado(boolean eliminado) { this.eliminado = eliminado; }
+    
+    public LocalDateTime getCreatedAt() { return this.createdAt; }
+    public void setCreatedAt(LocalDateTime createdAt) { this.createdAt = createdAt; }
 
-    public void setEliminado(boolean eliminado) {
-        this.eliminado = eliminado;
+    @Override
+    public String toString(){
+        return " - ID = " + this.id + "\n - Creado en : " + this.createdAt;
     }
+    
 }

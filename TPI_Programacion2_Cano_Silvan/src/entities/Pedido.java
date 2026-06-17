@@ -67,9 +67,16 @@ public class Pedido extends Base implements Calculable {
     @Override
     public void calcularTotal() {
         for (DetallePedido d : detalles){
-            if(d.isEliminado() == false){
+            if(d.getEliminado() == false){
                 total += d.getSubtotal();
             }
         }
+    }
+    
+    @Override
+    public String toString() {
+        return "Pedido {\n - ID : " + this.getId() + "\n - Usuario : " + this.usuario.getNombre() + 
+                "\n - Fecha : " + this.fecha + "\n - Estado : " + this.estado + "\n - Forma de Pago : " + this.formaPago +
+                "\n - Total : $" + this.total + "\n - Items : " + detalles.size() + "\n}";
     }
 }
