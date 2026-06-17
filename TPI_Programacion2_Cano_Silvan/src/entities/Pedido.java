@@ -12,6 +12,8 @@ public class Pedido extends Base implements Calculable {
     private Estado estado;
     private Double total;
     private FormaPago formaPago;
+    
+    private static Long contador = 0L;
  
     // Relacion N:1 con Usuario (muchos pedidos pertenecen a un usuario)
     private Usuario usuario;
@@ -26,8 +28,8 @@ public class Pedido extends Base implements Calculable {
         this.estado = Estado.PENDIENTE;
     }
  
-    public Pedido(Long id, LocalDate fecha, Estado estado, FormaPago formaPago, Usuario usuario) {
-        super(id);
+    public Pedido(LocalDate fecha, Estado estado, FormaPago formaPago, Usuario usuario) {
+        super(contador++);
         this.fecha = fecha;
         this.estado = estado;
         this.formaPago = formaPago;
@@ -38,21 +40,36 @@ public class Pedido extends Base implements Calculable {
  
     // Metodos propios del UML
     public void addDetallePedido(int cantidad, Double precioUnitario, Producto producto) {
-        // TODO
+        DetallePedido detalle = new DetallePedido(cantidad, precioUnitario,producto);
+        detalles.add(detalle);
+        calcularTotal();
     }
  
     public DetallePedido findeDetallePedidoByProducto(Producto producto) {
-        // TODO
+        for(DetallePedido d : detalles){
+            if(d.getProducto().equals(producto)){
+                return d;
+            }
+        }
         return null;
     }
  
     public void deleteDetallePedidoByProducto(Producto producto) {
-        // TODO
+        for(DetallePedido d : detalles){
+            if(d.getProducto().equals(producto)){
+                d.setEliminado(true);
+            }
+        }
+        calcularTotal();
     }
  
     // Metodo de la interfaz Calculable
     @Override
     public void calcularTotal() {
-        // TODO
+        for (DetallePedido d : detalles){
+            if(d.isEliminado() == false){
+                total += d.getSubtotal();
+            }
+        }
     }
 }
