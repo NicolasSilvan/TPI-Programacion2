@@ -2,6 +2,9 @@ package entities;
 
 import enums.Estado;
 import enums.FormaPago;
+import exception.EntidadNoEncontradaException;
+import exception.PrecioInvalidoException;
+import exception.StockInvalidoException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -39,26 +42,38 @@ public class Pedido extends Base implements Calculable {
     }
  
     // Metodos propios del UML
-    public void addDetallePedido(int cantidad, Double precioUnitario, Producto producto) {
-        DetallePedido detalle = new DetallePedido(cantidad, precioUnitario,producto);
+    public void addDetallePedido(int cantidad, Double precioUnitario, Producto producto) throws StockInvalidoException, PrecioInvalidoException{
+        if (precioUnitario <= 0){
+            throw new PrecioInvalidoException("El precio debe ser mayor a 0.");
+        }
+        if (cantidad <= 0){
+            throw new StockInvalidoException("La cantidad debe ser mayor a 0.");
+        }
+        
+        DetallePedido detalle = new DetallePedido(cantidad, precioUnitario, producto);
         detalles.add(detalle);
         calcularTotal();
     }
  
-    public DetallePedido findeDetallePedidoByProducto(Producto producto) {
+    public DetallePedido findeDetallePedidoByProducto(Producto producto) throws EntidadNoEncontradaException{
         for(DetallePedido d : detalles){
             if(d.getProducto().equals(producto)){
                 return d;
             }
         }
-        return null;
+        throw new EntidadNoEncontradaException("El hay ningun detalle con ese producto o no existe.");
     }
  
-    public void deleteDetallePedidoByProducto(Producto producto) {
+    public void deleteDetallePedidoByProducto(Producto producto) throws EntidadNoEncontradaException{
+        boolean encontrado = false;
         for(DetallePedido d : detalles){
             if(d.getProducto().equals(producto)){
                 d.setEliminado(true);
+                encontrado = true;
             }
+        }
+        if(encontrado == false){
+            throw new EntidadNoEncontradaException("No hay ningun detalle con ese producto o no existe.");
         }
         calcularTotal();
     }
