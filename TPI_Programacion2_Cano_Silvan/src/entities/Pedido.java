@@ -40,6 +40,18 @@ public class Pedido extends Base implements Calculable {
         this.total = 0.0;
         this.detalles = new ArrayList<>();
     }
+    
+    public Usuario getUsuario() { return usuario; }
+    public void setUsuario(Usuario usuario) { this.usuario = usuario; }
+    
+    public Estado getEstado() { return estado; }
+    public void setEstado(Estado estado) { this.estado = estado; }
+ 
+    public FormaPago getFormaPago() { return formaPago; }
+    public void setFormaPago(FormaPago formaPago) { this.formaPago = formaPago; }
+    
+    public List<DetallePedido> getDetalles() { return detalles; }
+    public void setDetalles(List<DetallePedido> detalles) { this.detalles = detalles; }
  
     // Metodos propios del UML
     public void addDetallePedido(int cantidad, Double precioUnitario, Producto producto) throws StockInvalidoException, PrecioInvalidoException{
