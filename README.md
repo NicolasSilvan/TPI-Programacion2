@@ -17,8 +17,8 @@ java Main
 ```
 Si se usa un IDE como NetBeans:
 
-- Dentro del programa, ir a Importar Projecto -> From Zip... y se selecciona el archivo zip descargado.
+- Dentro del programa, ir a Import Project -> From Zip... y se selecciona el archivo zip descargado.
 
-- O se ingresa a la carpeta C:\Users\<Nombre>\Documents\NetBeansProjects y se deja la carpeta que esta dentro del archivo zip.
+- O se ingresa a la carpeta C:\Users\ Nombre \Documents\NetBeansProjects y se deja la carpeta que esta dentro del archivo zip.
 
-### Link del video explicativo:
+### Link del video explicativo: https://drive.google.com/file/d/1bCH_bBV88IYaCuMa_RHMpae0q8SRxb-r/view?usp=sharing
