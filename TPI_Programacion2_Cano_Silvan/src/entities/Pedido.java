@@ -2,6 +2,7 @@ package entities;
 
 import enums.Estado;
 import enums.FormaPago;
+import exception.CantidadInvalidaException;
 import exception.EntidadNoEncontradaException;
 import exception.PrecioInvalidoException;
 import exception.StockInvalidoException;
@@ -16,7 +17,7 @@ public class Pedido extends Base implements Calculable {
     private Double total;
     private FormaPago formaPago;
     
-    private static Long contador = 0L;
+    private static Long contador = 1L;
  
     // Relacion N:1 con Usuario (muchos pedidos pertenecen a un usuario)
     private Usuario usuario;
@@ -56,12 +57,16 @@ public class Pedido extends Base implements Calculable {
     public double getTotal() { return this.total; }
  
     // Metodos propios del UML
-    public void addDetallePedido(int cantidad, Double precioUnitario, Producto producto) throws StockInvalidoException, PrecioInvalidoException{
+    public void addDetallePedido(int cantidad, Double precioUnitario, Producto producto) throws StockInvalidoException, PrecioInvalidoException, CantidadInvalidaException{
         if (precioUnitario <= 0){
             throw new PrecioInvalidoException("El precio debe ser mayor a 0.");
         }
-        if (cantidad <= 0){
-            throw new StockInvalidoException("La cantidad debe ser mayor a 0.");
+        if (producto.getStock() < cantidad){
+            throw new StockInvalidoException("Stock insuficiente para " + producto.getNombre()
+                                 + ". Stock disponible : " + producto.getStock());
+        }
+        if (cantidad <= 0) {
+            throw new CantidadInvalidaException("La cantidad debe ser mayor a 0.");
         }
         
         DetallePedido detalle = new DetallePedido(cantidad, precioUnitario, producto);
